@@ -31,5 +31,20 @@ namespace Recursion
             N.RemoveAt(0);
             return 1 + ListLength(N);
         }
+
+        // 4 Задание.
+        bool IsPalindrome(string word)
+        {
+            int left = 0;
+            int right = word.Length - 1;
+            return DoPalindromeCalc(word, left, right);
+        }
+
+        bool DoPalindromeCalc(string word, int left, int right)
+        {
+            if (left == right || left > right) return true;
+            if (word[left] != word[right]) return false;
+            return DoPalindromeCalc(word, left + 1, right - 1);
+        }
     }
 }
