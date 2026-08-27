@@ -21,7 +21,7 @@ namespace Recursion
         {
             if (N == 0) return 0;
             if (N < 0) N = -N;
-            return N % 10 + SumOfDigits(N / 10); 
+            return N % 10 + SumOfDigits(N / 10);
         }
 
         // 3 Задание.
@@ -46,5 +46,40 @@ namespace Recursion
             if (word[left] != word[right]) return false;
             return DoPalindromeCalc(word, left + 1, right - 1);
         }
+
+        // 5 Задание.
+        void PrintEvenValues(List<int> lst, int i = 0)
+        {
+            if (i == lst.Count) return;
+            if (lst[i] % 2 == 0) System.Console.WriteLine(lst[i]);
+            PrintEvenValues(lst, i + 1);
+        }
+
+        // 6 Задание.
+        void PrintEvenIdx(List<int> lst, int i = 0)
+        {
+            if (i >= lst.Count) return;
+            System.Console.WriteLine(lst[i]);
+            PrintEvenIdx(lst, i + 2);
+        }
+
+        // 7  Задание.
+        int FindSecondMaxValue(List<int> lst)
+        {
+            if (lst.Count < 2) return -1;
+            int FirstMax = lst[0];
+            int SecondMax = int.MinValue;
+            return DoFindSecondMaxValue(lst, FirstMax, SecondMax);
+
+        }
+
+        int DoFindSecondMaxValue(List<int> lst, int FirstMax, int SecondMax, int i = 1)
+        {
+            if (i == lst.Count) return SecondMax;
+            if (lst[i] >= FirstMax) return DoFindSecondMaxValue(lst, lst[i], FirstMax, i + 1);
+            if (lst[i] >= SecondMax) return DoFindSecondMaxValue(lst, FirstMax, lst[i], i + 1);
+            else return DoFindSecondMaxValue(lst, FirstMax, SecondMax, i + 1);
+        }
+
     }
 }
