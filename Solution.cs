@@ -98,26 +98,28 @@ namespace Recursion
         T DoFindSecondMaxValue<T>(List<T> lst, T FirstMax, T SecondMax, int i) where T : IComparable<T>
         {
             if (i == lst.Count) return SecondMax;
-            if (lst[i].CompareTo(FirstMax) >= 0) return DoFindSecondMaxValue(lst, lst[i], FirstMax, i + 1);
-            if (lst[i].CompareTo(SecondMax) >= 0) return DoFindSecondMaxValue(lst, FirstMax, lst[i], i + 1);
-            else return DoFindSecondMaxValue(lst, FirstMax, SecondMax, i + 1);
+            if (lst[i].CompareTo(FirstMax) >= 0)
+            {
+                SecondMax = FirstMax;
+                FirstMax = lst[i];
+            }
+            else if (lst[i].CompareTo(SecondMax) >= 0)
+            {
+                SecondMax = lst[i];
+
+            }
+            return DoFindSecondMaxValue(lst, FirstMax, SecondMax, i + 1);
         }
 
         // 8 Задание.
         List<string> FindAllFiles(string path)
         {
-            List<string> result = new List<string>();
-            DoFindAllFiles(path, result);
-            return result;
-        }
-
-        void DoFindAllFiles(string path, List<string> result)
-        {
-            result.AddRange(Directory.GetFiles(path));
-            foreach (string Path in Directory.GetDirectories(path))
+            List<string> result = new List<string>(Directory.GetFiles(path));
+            foreach (string dir in Directory.GetDirectories(path))
             {
-                DoFindAllFiles(Path, result);
+                result.AddRange(FindAllFiles(dir));
             }
+            return result;
         }
 
     }
